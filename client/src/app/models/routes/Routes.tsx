@@ -9,24 +9,35 @@ import ServerError from "../../errors/ServerError";
 import NotFound from "../../errors/NotFound";
 import BasketPage from "../../../features/basket/BasketPage";
 import CheckoutPage from "../../../features/CheckoutPage";
+import LoginForm from "../../../features/account/LoginForm";
+import RegisterForm from "../../../features/account/RegisterForm";
+import RequireAuth from "./RequireAuth";
 
 export const router = createBrowserRouter([
     {
         path: '/',
         element: <App />,
         children: [
-            {path:'', element: <HomePage />},
-            {path:'/catalog', element: <Catalog />},
-            {path:'/catalog/:id', element: <ProductDetails />},
-            {path:'/about', element: <AboutPage />},
-            {path:'/contact', element: <ContactPage />},
-            {path:'/basket', element: <BasketPage />},
-            {path:'/server-error', element:<ServerError/>},
-            {path:'/not-found', element:<NotFound/>},
-            {path:'/checkout', element:<CheckoutPage/>},
-            {path: '*', element:<Navigate replace to='/not-found'/> }
-            
+            {
+                element: <RequireAuth />, children: [
+                    { path: 'checkout', element: <CheckoutPage /> }
+                ]
+            },
+            { path: '', element: <HomePage /> },
+            { path: 'catalog', element: <Catalog /> },
+            { path: 'catalog/:id', element: <ProductDetails /> },
+            { path: 'about', element: <AboutPage /> },
+            { path: 'contact', element: <ContactPage /> },
+            { path: 'basket', element: <BasketPage /> },
+            { path: 'server-error', element: <ServerError /> },
+            { path: 'not-found', element: <NotFound /> },
+            { path: 'login', element: <LoginForm /> },
+            { path: 'register', element: <RegisterForm /> },
+
+
+            { path: '*', element: <Navigate replace to='/not-found' /> }
+
         ]
-        
+
     }
 ])
